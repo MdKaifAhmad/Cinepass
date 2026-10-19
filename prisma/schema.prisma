@@ -1,0 +1,166 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+}
+
+enum SeatCategory {
+  REGULAR
+  PREMIUM
+  RECLINER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  phone        String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  bookings     Booking[]
+
+  @@map("users")
+}
+
+model CinemaHall {
+  id           String   @id @default(uuid())
+  name         String
+  address      String
+  city         String
+  latitude     Float
+  longitude    Float
+  totalScreens Int      @default(1) @map("total_screens")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  screens      Screen[]
+
+  @@index([latitude, longitude])
+  @@index([city])
+  @@map("cinema_halls")
+}
+
+model Screen {
+  id           String       @id @default(uuid())
+  cinemaHallId String       @map("cinema_hall_id")
+  name         String
+  screenType   String       @default("2D") @map("screen_type")
+  totalSeats   Int          @map("total_seats")
+
+  cinemaHall   CinemaHall   @relation(fields: [cinemaHallId], references: [id], onDelete: Cascade)
+  seats        Seat[]
+  shows        Show[]
+
+  @@map("screens")
+}
+
+model Seat {
+  id           String        @id @default(uuid())
+  screenId     String        @map("screen_id")
+  rowLabel     String        @map("row_label")
+  seatNumber   Int           @map("seat_number")
+  category     SeatCategory  @default(REGULAR)
+  basePrice    Float         @map("base_price")
+
+  screen       Screen        @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  bookingSeats BookingSeat[]
+
+  @@unique([screenId, rowLabel, seatNumber])
+  @@map("seats")
+}
+
+model Movie {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  genre       String
+  durationMin Int      @map("duration_min")
+  language    String
+  posterUrl   String?  @map("poster_url")
+  releaseDate DateTime @map("release_date")
+  rating      Float    @default(0.0)
+
+  shows       Show[]
+
+  @@map("movies")
+}
+
+model Show {
+  id              String        @id @default(uuid())
+  movieId         String        @map("movie_id")
+  screenId        String        @map("screen_id")
+  showTime        DateTime      @map("show_time")
+  priceMultiplier Float         @default(1.0) @map("price_multiplier")
+  version         Int           @default(0)
+
+  movie           Movie         @relation(fields: [movieId], references: [id])
+  screen          Screen        @relation(fields: [screenId], references: [id])
+  bookings        Booking[]
+  bookingSeats    BookingSeat[]
+
+  @@index([movieId, showTime])
+  @@map("shows")
+}
+
+model Booking {
+  id           String        @id @default(uuid())
+  userId       String        @map("user_id")
+  showId       String        @map("show_id")
+  status       BookingStatus @default(PENDING)
+  totalAmount  Float         @map("total_amount")
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  user         User          @relation(fields: [userId], references: [id])
+  show         Show          @relation(fields: [showId], references: [id])
+  bookingSeats BookingSeat[]
+  payment      Payment?
+
+  @@map("bookings")
+}
+
+model BookingSeat {
+  id        String   @id @default(uuid())
+  bookingId String   @map("booking_id")
+  seatId    String   @map("seat_id")
+  showId    String   @map("show_id")
+  price     Float
+
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  seat      Seat     @relation(fields: [seatId], references: [id])
+  show      Show     @relation(fields: [showId], references: [id])
+
+  @@unique([showId, seatId])
+  @@map("booking_seats")
+}
+
+model Payment {
+  id              String        @id @default(uuid())
+  bookingId       String        @unique @map("booking_id")
+  stripePaymentId String        @unique @map("stripe_payment_id")
+  amount          Float
+  currency        String        @default("inr")
+  status          PaymentStatus @default(PENDING)
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  booking         Booking       @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}

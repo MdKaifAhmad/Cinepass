@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+  # ============================================
+  # Node.js + Express Application
+  # ============================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cinepass-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - cinepass-network
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+
+  # ============================================
+  # PostgreSQL 16 + PostGIS
+  # ============================================
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: cinepass-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cinepass_user
+      POSTGRES_PASSWORD: cinepass_pass
+      POSTGRES_DB: cinepass_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinepass_user -d cinepass_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - cinepass-network
+
+  # ============================================
+  # Redis 7 (Seat Locking + Caching)
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: cinepass-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cinepass-network
+
+# ============================================
+# Networks & Volumes
+# ============================================
+networks:
+  cinepass-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:
