@@ -6,6 +6,40 @@ Built with a strong focus on **High Concurrency, Distributed Locking (Race Condi
 
 ---
 
+## 🛠️ Tech Stack
+
+<p align="left">
+  <img src="https://img.shields.io/badge/Node.js_22+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js_5.x-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostGIS-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis_7-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/Prisma_6-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white" />
+  <img src="https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+</p>
+
+```
+Node.js 22+ • Express.js 5.x • PostgreSQL 16 (PostGIS) • Redis 7 (Distributed Locking) • Prisma 6 • Socket.io • Stripe Payments • Docker
+```
+
+| Domain | Technology / Tools |
+|---|---|
+| **Backend Core** | Node.js 22 LTS, Express.js 5.x |
+| **Database & Geo** | PostgreSQL 16, PostGIS (Spherical Haversine) |
+| **ORM** | Prisma ORM 6.x |
+| **Cache & Concurrency** | Redis 7 (SETNX + Lua Scripts for Atomic Seat Locking) |
+| **Real-Time Engine** | Socket.io 4.x (Room-based live seat status broadcasts) |
+| **Payment Gateway** | Stripe API (Raw Buffer Webhooks with Idempotency) |
+| **Security & Auth** | JWT, Bcrypt (10 salt rounds), Helmet, Rate Limiter |
+| **Validation & Schema** | Zod 3.x |
+| **Logging & Monitoring** | Winston (Structured JSON & Rotating File Logs) |
+| **Containerization** | Docker, Docker Compose (Multi-stage minimal image) |
+
+---
+
 ## 🏗️ System Architecture
 
 ```mermaid
@@ -61,41 +95,7 @@ flowchart TD
 - Multi-stage Dockerfile producing a minimal Alpine production image (~120MB) running as a non-root user.
 - Docker Compose orchestrates Node.js, PostgreSQL with PostGIS, and Redis with healthchecks and internal DNS resolution.
 
----
 
-## 🛠️ Tech Stack
-
-<p align="left">
-  <img src="https://img.shields.io/badge/Node.js_22+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/Express.js_5.x-000000?style=for-the-badge&logo=express&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostGIS-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Redis_7-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
-  <img src="https://img.shields.io/badge/Prisma_6-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
-  <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white" />
-  <img src="https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
-</p>
-
-```
-Node.js 22+ • Express.js 5.x • PostgreSQL 16 (PostGIS) • Redis 7 (Distributed Locking) • Prisma 6 • Socket.io • Stripe Payments • Docker
-```
-
-| Domain | Technology / Tools |
-|---|---|
-| **Backend Core** | Node.js 22 LTS, Express.js 5.x |
-| **Database & Geo** | PostgreSQL 16, PostGIS (Spherical Haversine) |
-| **ORM** | Prisma ORM 6.x |
-| **Cache & Concurrency** | Redis 7 (SETNX + Lua Scripts for Atomic Seat Locking) |
-| **Real-Time Engine** | Socket.io 4.x (Room-based live seat status broadcasts) |
-| **Payment Gateway** | Stripe API (Raw Buffer Webhooks with Idempotency) |
-| **Security & Auth** | JWT, Bcrypt (10 salt rounds), Helmet, Rate Limiter |
-| **Validation & Schema** | Zod 3.x |
-| **Logging & Monitoring** | Winston (Structured JSON & Rotating File Logs) |
-| **Containerization** | Docker, Docker Compose (Multi-stage minimal image) |
-
----
 
 ## 🚀 Quick Start (Docker)
 
