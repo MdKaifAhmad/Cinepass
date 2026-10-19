@@ -63,19 +63,24 @@ flowchart TD
 
 ---
 
-## 📦 Tech Stack
+## 📦 Tech Stack & Ecosystem
 
-- **Runtime:** Node.js 22 LTS
-- **Framework:** Express.js 5.x
-- **Database:** PostgreSQL 16 + PostGIS
-- **ORM:** Prisma 6.x
-- **In-Memory Cache & Locking:** Redis 7 / ioredis
-- **Real-Time Engine:** Socket.io
-- **Payment Gateway:** Stripe API
-- **Authentication:** JWT (JSON Web Tokens) + Bcrypt password hashing
-- **Input Validation:** Zod
-- **Logging & Observability:** Winston (Structured JSON / Rotating File Transports)
-- **Containerization:** Docker & Docker Compose
+### 🌐 Backend & Core Services (Node.js & Java/Spring Boot)
+- **Node.js Service:** Node.js 22 LTS, Express.js 5.x, Prisma 6.x
+- **Enterprise Service:** Java 21+, Spring Boot 4.x, Spring Security (OAuth2 / JWT)
+- **AI & Intelligent Recommendations:** Groq AI (Ultra-fast LLM inference for personalized movie suggestions & smart seat advice)
+- **Frontend Layer:** Modern React / Next.js SPA Client (Seat Map UI & Real-Time Booking State)
+
+### 🗄️ Databases & In-Memory Systems
+- **Relational Databases:** PostgreSQL 16 + PostGIS & MySQL
+- **Distributed Cache & Locking:** Redis 7 / Redisson / ioredis (SETNX + Lua Scripts)
+
+### 📡 Real-Time, Payments & Infrastructure
+- **Real-Time Engine:** Socket.io / WebSockets
+- **Payment Processing:** Stripe API (Idempotent Webhooks)
+- **Security & Validation:** JWT, Bcrypt, Zod, Spring Security
+- **Observability:** Winston (Structured JSON Logging)
+- **Containerization:** Docker & Docker Compose (Multi-stage builds)
 
 ---
 
