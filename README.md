@@ -63,24 +63,37 @@ flowchart TD
 
 ---
 
-## 📦 Tech Stack & Ecosystem
+## 🛠️ Tech Stack
 
-### 🌐 Backend & Core Services (Node.js & Java/Spring Boot)
-- **Node.js Service:** Node.js 22 LTS, Express.js 5.x, Prisma 6.x
-- **Enterprise Service:** Java 21+, Spring Boot 4.x, Spring Security (OAuth2 / JWT)
-- **AI & Intelligent Recommendations:** Groq AI (Ultra-fast LLM inference for personalized movie suggestions & smart seat advice)
-- **Frontend Layer:** Modern React / Next.js SPA Client (Seat Map UI & Real-Time Booking State)
+<p align="left">
+  <img src="https://img.shields.io/badge/Node.js_22+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js_5.x-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostGIS-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis_7-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/Prisma_6-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white" />
+  <img src="https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+</p>
 
-### 🗄️ Databases & In-Memory Systems
-- **Relational Databases:** PostgreSQL 16 + PostGIS & MySQL
-- **Distributed Cache & Locking:** Redis 7 / Redisson / ioredis (SETNX + Lua Scripts)
+```
+Node.js 22+ • Express.js 5.x • PostgreSQL 16 (PostGIS) • Redis 7 (Distributed Locking) • Prisma 6 • Socket.io • Stripe Payments • Docker
+```
 
-### 📡 Real-Time, Payments & Infrastructure
-- **Real-Time Engine:** Socket.io / WebSockets
-- **Payment Processing:** Stripe API (Idempotent Webhooks)
-- **Security & Validation:** JWT, Bcrypt, Zod, Spring Security
-- **Observability:** Winston (Structured JSON Logging)
-- **Containerization:** Docker & Docker Compose (Multi-stage builds)
+| Domain | Technology / Tools |
+|---|---|
+| **Backend Core** | Node.js 22 LTS, Express.js 5.x |
+| **Database & Geo** | PostgreSQL 16, PostGIS (Spherical Haversine) |
+| **ORM** | Prisma ORM 6.x |
+| **Cache & Concurrency** | Redis 7 (SETNX + Lua Scripts for Atomic Seat Locking) |
+| **Real-Time Engine** | Socket.io 4.x (Room-based live seat status broadcasts) |
+| **Payment Gateway** | Stripe API (Raw Buffer Webhooks with Idempotency) |
+| **Security & Auth** | JWT, Bcrypt (10 salt rounds), Helmet, Rate Limiter |
+| **Validation & Schema** | Zod 3.x |
+| **Logging & Monitoring** | Winston (Structured JSON & Rotating File Logs) |
+| **Containerization** | Docker, Docker Compose (Multi-stage minimal image) |
 
 ---
 
